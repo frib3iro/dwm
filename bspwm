@@ -22,3 +22,10 @@ $ mkdir -p ~/.config/{bspwm,sxhkd}
 $ cp /usr/local/share/doc/bspwm/examples/bspwmrc ~/.config/bspwm/
 $ cp /usr/local/share/doc/bspwm/examples/sxhkdrc ~/.config/sxhkd/
 $ chmod u+x ~/.config/bspwm/bspwmrc
+
+
+vim /home/fabio/.xinitrc
+sxhkd &
+exec bspwm
+
+sudo apt install compton feh -y
