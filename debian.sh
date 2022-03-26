@@ -19,3 +19,4 @@ visudopara modificar o arquivo sudoers e adicione a seguinte linha (se estiver f
 
 Você precisa se conectar ou reiniciar completamente o dispositivo para que as alterações entrem em vigor.
 
+sudo apt install build-essential cmake 
