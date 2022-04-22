@@ -8,7 +8,7 @@ git commit -m ""
 
 git push -u origin main
 
-git remote set-url git@github.com:frib3iro/debian.git
+git remote set-url origin git@github.com:frib3iro/debian.git
 
 
 # O branch padrão foi renomeado!
