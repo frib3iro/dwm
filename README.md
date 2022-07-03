@@ -1,4 +1,4 @@
-# Debian
+# DWM
 
 # Adicionando ao github
 
@@ -8,7 +8,7 @@ git commit -m ""
 
 git push -u origin main
 
-git remote set-url origin git@github.com:frib3iro/debian.git
+git remote set-url origin git@github.com:frib3iro/dwm.git
 
 # Se você tiver um clone local, poderá atualizá-lo executando os comandos a seguir.
 
