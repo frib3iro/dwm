@@ -2,6 +2,7 @@
 
 clear
 echo ">>> Criando pasta arquivos..."
+sleep 1s
 mkdir arquivos && cd arquivos
 
 clear
@@ -30,6 +31,7 @@ done
 clear
 echo "Criando o arquivo dwm.desktop..."
 sleep 1s
+sudo mkdir /usr/share/xsessions
 cat > '/usr/share/xsessions/dwm.desktop' << EOF
 [Desktop Entry]
 Name=DWM
@@ -38,5 +40,4 @@ Exec=dwm
 Icon=dwm
 Type=XSession
 EOF
-
 
