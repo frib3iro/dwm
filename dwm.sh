@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 clear
-echo ">>> Criando pasta arquivos..."
+echo ">>> Criando a pasta arquivos..."
 sleep 1s
 mkdir arquivos && cd arquivos
 
@@ -28,16 +28,19 @@ for i in *.gz; do
     rm -rf $i
 done
 
-clear
-echo "Criando o arquivo dwm.desktop..."
-sleep 1s
-sudo mkdir /usr/share/xsessions
-cat > '/usr/share/xsessions/dwm.desktop' << EOF
-[Desktop Entry]
-Name=DWM
-Comment=DWM
-Exec=dwm
-Icon=dwm
-Type=XSession
-EOF
+# clear
+# echo "Criando o arquivo dwm.desktop..."
+# sleep 1s
+# sudo mkdir /usr/share/xsessions
+# cat >> '/usr/share/xsessions/dwm.desktop' << EOF
+# [Desktop Entry]
+# Name=DWM
+# Comment=DWM
+# Exec=dwm
+# Icon=dwm
+# Type=XSession
+# EOF
+
+# Para compilar
+# sudo make clean install
 
