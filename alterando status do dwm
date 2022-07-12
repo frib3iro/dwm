@@ -1,0 +1,98 @@
+alterando status do dwm
+
+Gosto muito do gerenciador de janelas i3, principalmente o i3-gaps. Mas, ultimamente tenho preferido usar o DWM, pois ele parece ser mais simples e leve que o i3. Mas o DWM não é tão "out of the box" quanto o i3. Quando iniciamos o DWM pela primeira vez, vemos que o status exibe apenas a versão do DWM, algo como "dwm-6.2".
+
+Para alterar o status, basta usarmos um comando com o "xsetroot", dessa forma:
+
+xsetroot -name "hello world!"
+
+Bem fácil, não?
+
+Se quiser exibir a data, bastaria usar o seguinte:
+
+xsetroot -name "$(date)"
+
+Como já deve ter percebido, a informação não se atualiza automaticamente. Para que ela seja atualizada, é necessário criar um "loop" em um Shell Script. Por exemplo:
+
+while true; do
+    xsetroot -name "$(date)"
+    sleep 2
+done
+
+Mas além da data e hora, se você quiser encontrar outras informações, pode seguir os comandos abaixo:
+
+1. Para exibir o uso médio do processador no último minuto:
+
+cat /proc/loadavg | awk '{print $1}'
+
+2. Para exibir a temperatura do processador:
+
+sed 's/000$/°C/' /sys/class/thermal/thermal_zone0/temp
+
+Ou:
+
+sed 's/000$/°C/' /sys/class/hwmon/hwmon0/temp2_input
+
+Busque em "thermal" e em "hwmon", pois depende do computador.
+
+3. Para ver o espaço livre em disco, use o seguinte:
+
+df -h | awk '{ if ($6 == "/") print $4 }'
+
+4. Para ver uso da memória:
+
+free -h | awk '(NR==2){ print $3 }'
+
+5. Para ver o volume do som:
+
+amixer get Master | awk -F'[][]' 'END{ print $2 }'
+
+6. Para ver o status do dispositivo de rede:
+
+cat /sys/class/net/enp1s0/operstate
+
+Obs.: troque "enp1s0" pelo SEU dispositivo.
+
+7. E para pegar a data e hora de forma mais organizada, use:
+
+date +"%a %d %h %H:%M"
+
+Agora, para colocar todas as informações em um script, faça o seguinte:
+
+#!/bin/bash
+
+DATE=$(date +"%a %d %h %H:%M")
+VOL=$( amixer get Master | awk -F'[][]' 'END{ print $2 }')
+CPUUSE=$(cat /proc/loadavg | awk '{print $1}')
+MEMUSE=$(free -h | awk '(NR==2){ print $3 }')
+TEMPCPU=$(sed 's/000$/°C/' /sys/class/hwmon/hwmon0/temp2_input)
+DISKFREE=$(df -h | awk '{ if ($6 == "/") print $4 }')
+NETSTATE=$(cat /sys/class/net/enp1s0/operstate)
+
+echo " CPU: $CPUUSE% | TEMP: $TEMPCPU | /: $DISKFREE | MEM: $MEMUSE | VOL: $VOL | NET: $NETSTATE | $DATE"
+
+Salve o arquivo e torne-o executável ("chmod +x arquivo"). No meu caso resolvi salvar como "info.sh".
+
+Ao executar o script, receberá uma saída assim:
+
+CPU: 1.00% | TEMP: 92°C | /: 423G | MEM: 1,3Gi | VOL: 100% | NET: up | qua 02 out 09:42
+
+Para colocar essa informação no status do dwm coloque em um "loop", assim:
+
+while true; do
+    xsetroot -name "$(sh ~/info.sh)"
+    sleep 10
+done &
+
+Altere o tempo do "sleep" a seu gosto. No meu caso, coloquei o "loop" no arquivo ".xinitrc", antes de executar o DWM. Assim:
+
+setxkbmap -layout br
+
+while true; do
+    xsetroot -name "$(sh ~/info.sh)"
+    sleep 10
+done &
+
+exec dwm
+
+Então, quando inicio o "dwm", a informação vai para o status automaticamente.

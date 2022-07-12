@@ -1,0 +1,16 @@
+# Instalando o lightdm com slick-greeter
+
+sudo pacman -S lightdm
+sudo pacman -S lightdm-gtk-greeter lightdm-slick-greeter lightdm-gtk-greeter-settings
+sudo systemctl enable lightdm.service
+
+
+# Apos criar o arquivo slick-greeter.conf, apague todo o conteudo do arquivo e deixe somente as linhas abaixo.
+
+sudo touch slick-greeter.conf
+sudo echo > "[Greeter]" /etc/lightdm/slick-greeter.conf
+sudo echo >> "background=/usr/share/backgrounds/archlinux/wallpaper.jpg" /etc/lightdm/slick-greeter.conf
+
+# Execute este comando para ter uma previa do lightdm
+dm-tool switch-to-greeter
+

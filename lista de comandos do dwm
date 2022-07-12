@@ -1,0 +1,34 @@
+lista de comandos do dwm
+
+[Shift]+[Mod]+[Enter]   - abre terminal
+
+[Mod]+[b]               - exibe/oculta a barra
+[Mod]+[p]               - dmenu
+[Mod]+[Enter]           - manda janela para a área "master"
+
+[Mod] + [j / k]         - altera o foco entre as janelas na "tag" atual
+[Mod] + [h / l]         - aumenta e diminui o tamanho da área "master"
+
+[Mod]+[2]               - move o foco para "tag" 2
+[Shift]+[Mod]+[2]       - move janela para a "tag" 2
+
+[Mod] + [i / d]         - aumenta / diminui quantidade de janelas na "master"
+[Mod] + [, / .]         - move foco entre telas (multi monitor)
+[Shift]+[Mod]+[, / .]   - move a janela para tela diferente
+
+[Mod]+[0]               - mostra todas as janelas na tela
+[Shift]+[Mod]+[0]       - manda janela atual para todas as "tags"
+[Shift]+[Mod]+[c]       - mata janela
+[Shift]+[Mod]+[q]       - sai do dwm
+
+Modos:
+[Mod]+[t]               - tiled. []=
+[Mod]+[f]               - floating. ><>
+[Mod]+[m]               - monocle. [M]
+
+Em modo "floating":
+[Mod]+[botão direito do mouse]      - redimensiona janela
+[Mod]+[botão esquerdo do mouse]     - move janela
+[Mod]+[Space]                       - muda leiaute dentro do modo flutuante
+[Mod]+[Shift]+[Space]               - torna uma janela flutuante
+[Mod]+[botão do meio do mouse]      - tira/coloca janela em modo flutuante
