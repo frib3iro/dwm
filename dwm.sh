@@ -1,35 +1,69 @@
 #!/usr/bin/env bash
 
-# variaveis
-b='\e[34;1m'
-g='\e[32;1m'
-r='\e[31;1m'
-y='\e[33;1m'
-f='\e[m'
-s='\e[32;1m>>>\e[m'
+# Lista de pacotes para instalar com o pacman
+listapacman=(aircrack-ng arc-gtk-theme archlinux-wallpaper arc-icon- bluez bluez-utils bully capitaine-cursors cmatrix cowpatty cronie cups fdupes feh
+ffmpegthumbnailer flameshot geany geany-plugins gst-libav gst-plugin-pipewire gufw hashcat hcxdumptool hcxtools htop libreoffice libreoffice-fresh-pt-
+br lightdm lightdm-gtk-greeter lightdm-slick-greeter links lollypop lxappearance man-pages-pt_br mesa-demos mplayer neofetch picom ranger reaver rsync
+tcpdump termshark theme thunar ttf-droid ttf-font-awesome ttf-inconsolata ttf-opensans tumbler unrar wifite xclip xcursor-vanilla-dmz xcursor-vanilla-
+dmz-aa)
 
-# Lista de pacotes para instalar com o yay
-listayay=(tumbler-extra-thumbnailers lightdm lightdm-gtk-greeter lightdm-slick-greeter 4kvideodownloader cava consolas-font crunch debtap downgrade google-chrome mintstick mint-y-icons onedriver pyrit sardi-icons spotify timeshift ttf-ms-fonts ttf-ubuntu-font-family xcursor-breeze)
-
-# Instalando o yay
 echo
-echo -e "${s} ${b}Instalando o yay...${f}"
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si --noconfirm
-
-# Instalando pacotes com o yay
-echo
-echo -e "${s} ${b}Instalando pacotes com yay...${f}"
-for i in ${listayay[@]}
-do
+echo "Instalando pacotes com pacman..."
+for i in ${listapacman[@]}; do
     echo
-    echo -e "${s} ${b}Instalando o pacote $i ${f}"
-    if yay -S $i --noconfirm; then
-        echo -e "${s} ${g}Pacote $i instalado com sucesso!${f}"
+    echo "Instalando o pacote $i"
+    if pacman -S $i --noconfirm; then
+        echo "Pacote $i instalado com sucesso!"
     else
-        echo -e "${s} ${r}Houve erro na instalação do pacote $i!${f}"
+        echo "Houve erro na instalação do pacote $i!"
     fi
 done
 
+# Ediatando dmenu_run
+echo "Editando dmenu_run..."
+sleep 1s
+cat >> '/usr/local/bin/dmenu_run' << EOF
+LANG="pt_BR.UTF-8"
+dmenu_path | menu "$@" | ${SHELL:-"/bin/sh"}
+EOF
+
+# Criando o diretorio xsessions
+echo "Criando o diretorio xsessions..."
+sleep 1s
+mkdir /usr/share/xsessions
+
+echo "Criando o arquivo dwm.desktop..."
+sleep 1s
+touch /usr/share/xsessions/dwm.desktop
+
+echo "Injetando o conteudo no arquivo dwm.desktop..."
+sleep 1s
+cat >> '/usr/share/xsessions/dwm.desktop' << EOF
+[Desktop Entry]
+Encoding=UTF-8
+Name=dwm
+Comment=Dynamic window manager
+Exec=dwm
+Icon=dwm
+Type=XSession
+EOF
+
+echo "Editando o arquivo lightdm.conf"
+sleep 1s
+sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-gtk-greeter/' /etc/lightdm
+
+# Iniciando o bluez, cups e lightdm
+echo
+echo "Iniciando o bluez, cups lightdm..."
+systemctl enable bluetooth.service
+systemctl enable cups.service
+systemctl enable lightdm.service
+
+# Colorindo a sída do pacman
+echo
+echo "Colorindo a saída do pacman..."
+sleep 1s
+sed -i 's/#Color/Color/' /etc/pacman.conf
+
 cd /home/fabio && rm -rf go yay
+
